@@ -19,7 +19,7 @@
 
 - Log out cleared the cookie only after Appwrite's `deleteSession` succeeded, so a failed call left the user signed in. Fixed in [1a80767](https://github.com/Javlonbk/hauz-frontend-take-home/commit/1a80767).
 - Log out invalidated the viewer query before leaving the page, so the current page re-rendered with a null viewer. Fixed in [1a80767](https://github.com/Javlonbk/hauz-frontend-take-home/commit/1a80767).
-- `NOTES.md` was asked for in the onboarding commit and only written two commits later, in the commit that adds this file.
+- `NOTES.md` was asked for in the onboarding commit and only written two commits later, in [74020b7](https://github.com/Javlonbk/hauz-frontend-take-home/commit/74020b7).
 
 ## Next for production
 
