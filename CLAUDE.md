@@ -17,7 +17,7 @@ Some of them are wrong or unsafe on purpose. Before implementing any of them, te
 
 - Short plan first, I confirm, then code.
 - Small commits, one concern each. You stage and propose the message; I commit.
-- Simplest thing that works. No extra libraries, no abstractions, no styling.
+- Simplest thing that works. No extra libraries, no abstractions. Light CSS in `styles.css` only, no UI libraries.
 
 ## Code style
 

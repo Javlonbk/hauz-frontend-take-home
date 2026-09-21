@@ -11,15 +11,16 @@ import {
   type Viewer,
 } from '#/types'
 
-const ROLE_LABELS: Record<PersonalRole, string> = {
-  property_owner: 'Property Owner',
-  realtor: 'Realtor',
+import { ROLE_LABELS } from './roleLabels'
+
+const ROLE_HINTS: Record<PersonalRole, string> = {
+  property_owner: 'I list my own property',
+  realtor: 'I list for clients',
 }
 
 export function OnboardingScreen({ redirectTo }: { redirectTo: string }) {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  
   const createAccountMutation = useMutation({
     mutationFn: (form: FormData) =>
       createPersonalAccount({
@@ -33,22 +34,25 @@ export function OnboardingScreen({ redirectTo }: { redirectTo: string }) {
   })
 
   return (
-    <main>
+    <main className="screen">
       <h1>Tell us about you</h1>
+      <p className="lede">This is how people you deal with on HAUZ will see you.</p>
       <form
+        className="basin"
         onSubmit={(e) => {
           e.preventDefault()
           createAccountMutation.mutate(new FormData(e.currentTarget))
         }}
       >
-        <Field label="First name" name="firstName" required autoFocus />
-        <Field label="Last name" name="lastName" required />
+        <Field label="First name" name="firstName" maxLength={100} required autoFocus />
+        <Field label="Last name" name="lastName" maxLength={100} required />
         <fieldset>
           <legend>Role</legend>
           {PERSONAL_ROLES.map((role) => (
             <Field
               key={role}
               label={ROLE_LABELS[role]}
+              hint={ROLE_HINTS[role]}
               name="role"
               type="radio"
               value={role}

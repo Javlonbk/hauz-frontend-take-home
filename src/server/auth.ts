@@ -55,7 +55,7 @@ export const requestSignInCode = createServerFn({ method: 'POST' })
   })
 
 export const verifySignInCode = createServerFn({ method: 'POST' })
-  .validator(z.object({ userId: z.string().min(1), code: z.string().trim().min(1) }))
+  .validator(z.object({ userId: z.string().min(1), code: z.string().trim().regex(/^\d{6}$/) }))
   .handler(async ({ data }) => {
     const account = new Account(adminClient())
     const session = await account.createSession({

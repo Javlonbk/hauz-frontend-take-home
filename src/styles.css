@@ -1,38 +1,203 @@
-/* Deliberately minimal. Styling is not part of this task. */
-
 :root {
-  color-scheme: light dark;
-  font-family: system-ui, sans-serif;
+  --plaster: #edebe3;
+  --stone: #c9c2b2;
+  --pool: #dce9e6;
+  --water: #0f5f63;
+  --water-deep: #0a3f45;
+  --ink: #17201f;
+  --ink-soft: color-mix(in srgb, var(--ink) 70%, var(--plaster));
+  --mulberry: #6e2b3a;
+  color-scheme: light;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
+  background: var(--plaster);
+  color: var(--ink);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+}
+
+a {
+  color: var(--water);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--water) 30%, transparent);
+}
+
+.site-header,
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-header {
+  justify-content: space-between;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--stone);
+}
+
+.site-header a {
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.wordmark {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: var(--water-deep);
+}
+
+.screen {
+  width: min(100% - 2.5rem, 26rem);
+  margin: 3.5rem auto 4rem;
+}
+
+.screen h1 {
+  font-size: 1.6rem;
+  margin: 0 0 0.35rem;
+}
+
+.lede,
+.hint {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.lede {
+  margin-bottom: 1.75rem;
+}
+
+.hint {
+  font-size: 0.8rem;
+}
+
+.basin {
   padding: 1.5rem;
-  max-width: 44rem;
+  border-radius: 2px;
+  background: var(--pool);
+  box-shadow:
+    0 0 0 1px var(--stone),
+    0 0 0 5px var(--plaster),
+    0 0 0 6px var(--stone);
 }
 
-h1 {
-  font-size: 1.5rem;
+.basin > * + * {
+  margin-top: 1rem;
 }
 
-label {
-  display: block;
-  margin-top: 0.75rem;
+.field,
+.choice,
+fieldset {
+  display: grid;
+  gap: 0.35rem 0.6rem;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.choice {
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+}
+
+.choice > input {
+  order: -1;
+  grid-row: span 2;
+  width: auto;
+  margin: 0;
+  accent-color: var(--water);
+}
+
+label,
+legend {
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 input,
-select,
 textarea {
-  display: block;
   width: 100%;
-  max-width: 24rem;
-  padding: 0.4rem;
+  padding: 0.6rem 0.7rem;
   font: inherit;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--stone);
+  border-radius: 2px;
+}
+
+textarea {
+  min-height: 6rem;
+}
+
+::placeholder {
+  color: color-mix(in srgb, var(--ink) 40%, #fff);
+}
+
+.code-input {
+  font-family: ui-monospace, monospace;
+  font-size: 1.5rem;
+  letter-spacing: 0.35em;
+  text-align: center;
 }
 
 button {
-  margin-top: 1rem;
-  padding: 0.4rem 0.9rem;
+  padding: 0.65rem 1.1rem;
   font: inherit;
+  font-weight: 500;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+button[type='submit'] {
+  width: 100%;
+  margin-top: 1.5rem;
+  background: var(--water);
+  color: var(--plaster);
+}
+
+button[type='submit']:hover:not(:disabled) {
+  background: var(--water-deep);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.quiet {
+  padding: 0.35rem 0.6rem;
+  background: none;
+  color: var(--water);
+}
+
+[role='alert'],
+.notice {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+}
+
+[role='alert'] {
+  padding: 0.6rem 0.8rem;
+  border-left: 3px solid var(--mulberry);
+  background: color-mix(in srgb, var(--mulberry) 12%, #fff);
+  color: var(--mulberry);
+}
+
+.notice {
+  color: var(--water);
+  font-weight: 500;
 }

@@ -8,7 +8,7 @@ import { requestSignInCode, verifySignInCode } from '#/server'
 import { viewerQueryOptions } from './viewer'
 
 export function SignInScreen({ redirectTo }: { redirectTo: string }) {
-  const [userId, setUserId] = useState<string | null>(null)
+  const [pending, setPending] = useState<{ userId: string; email: string } | null>(null)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
 
@@ -22,34 +22,51 @@ export function SignInScreen({ redirectTo }: { redirectTo: string }) {
   }
 
   return (
-    <main>
+    <main className="screen">
       <h1>Sign in</h1>
-      {userId ? (
-        <CodeStep userId={userId} onSignedIn={handleSignedIn} />
+      <p className="lede">
+        {pending
+          ? `We sent a code to ${pending.email}.`
+          : 'One code by email. No password to remember.'}
+      </p>
+      {pending ? (
+        <CodeStep userId={pending.userId} onSignedIn={handleSignedIn} />
       ) : (
-        <EmailStep onCodeSent={setUserId} />
+        <EmailStep onCodeSent={(userId, email) => setPending({ userId, email })} />
       )}
     </main>
   )
 }
 
-function EmailStep({ onCodeSent }: { onCodeSent: (userId: string) => void }) {
+function EmailStep({
+  onCodeSent,
+}: {
+  onCodeSent: (userId: string, email: string) => void
+}) {
   const requestCodeMutation = useMutation({
     mutationFn: (email: string) => requestSignInCode({ data: { email } }),
-    onSuccess: ({ userId }) => onCodeSent(userId),
+    onSuccess: ({ userId }, email) => onCodeSent(userId, email),
   })
 
   return (
     <form
+      className="basin"
       onSubmit={(e) => {
         e.preventDefault()
         const form = new FormData(e.currentTarget)
         requestCodeMutation.mutate(String(form.get('email')))
       }}
     >
-      <Field label="Email" name="email" type="email" required autoFocus />
+      <Field
+        label="Email"
+        name="email"
+        type="email"
+        placeholder="name@example.com"
+        required
+        autoFocus
+      />
       <button type="submit" disabled={requestCodeMutation.isPending}>
-        Send code
+        Email me a code
       </button>
       {requestCodeMutation.error && (
         <p role="alert">{requestCodeMutation.error.message}</p>
@@ -72,23 +89,28 @@ function CodeStep({
 
   return (
     <form
+      className="basin"
       onSubmit={(e) => {
         e.preventDefault()
         const form = new FormData(e.currentTarget)
         verifyCodeMutation.mutate(String(form.get('code')))
       }}
     >
-      <p>Enter the code we emailed you.</p>
       <Field
         label="Code"
         name="code"
+        className="code-input"
         inputMode="numeric"
         autoComplete="one-time-code"
+        placeholder="000000"
+        maxLength={6}
+        pattern="[0-9]{6}"
+        title="The 6-digit code from the email"
         required
         autoFocus
       />
       <button type="submit" disabled={verifyCodeMutation.isPending}>
-        Continue
+        Sign in
       </button>
       {verifyCodeMutation.error && (
         <p role="alert">{verifyCodeMutation.error.message}</p>

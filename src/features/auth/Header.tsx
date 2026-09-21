@@ -10,15 +10,22 @@ export function Header() {
   const viewer = viewerQuery.data
 
   return (
-    <header>
-      <Link to="/">HAUZ</Link>{' '}
-      {viewer ? (
-        <>
-          <span>{viewer.account?.firstName}</span> <LogOutButton />
-        </>
-      ) : (
-        <Link to="/sign-in">Sign in</Link>
-      )}
+    <header className="site-header">
+      <Link to="/" className="wordmark">
+        HAUZ
+      </Link>
+      <nav className="identity">
+        {viewer ? (
+          <>
+            {viewer.account && (
+              <Link to="/profile">{viewer.account.firstName}</Link>
+            )}
+            <LogOutButton />
+          </>
+        ) : (
+          <Link to="/sign-in">Sign in</Link>
+        )}
+      </nav>
     </header>
   )
 }
@@ -38,6 +45,7 @@ function LogOutButton() {
     <>
       <button
         type="button"
+        className="quiet"
         disabled={logOutMutation.isPending}
         onClick={() => logOutMutation.mutate()}
       >

@@ -8,6 +8,13 @@ export const createPersonalAccountSchema = z.object({
   role: z.enum(PERSONAL_ROLES),
 })
 
+export const updatePersonalAccountSchema = z.object({
+  firstName: z.string().trim().min(1).max(100),
+  lastName: z.string().trim().min(1).max(100),
+  contactEmail: z.email().max(254).nullable(),
+  bio: z.string().trim().min(1).max(2000).nullable(),
+})
+
 export type PersonalRole = z.infer<typeof createPersonalAccountSchema>['role']
 
 export interface PersonalAccount {
