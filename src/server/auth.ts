@@ -6,6 +6,7 @@ import {
   adminClient,
   clearSessionSecret,
   readSessionSecret,
+  sessionClient,
   writeSessionSecret,
 } from '#/server/appwrite'
 import {
@@ -68,3 +69,19 @@ export const verifySignInCode = createServerFn({ method: 'POST' })
     writeSessionSecret(session.secret, session.expire)
     return { hasAccount: (await loadAccount(session.secret)) !== null }
   })
+
+export const logOut = createServerFn({ method: 'POST' }).handler(async () => {
+  const secret = readSessionSecret()
+  if (!secret) {
+    return
+  }
+
+  try {
+    await new Account(sessionClient(secret)).deleteSession({ sessionId: 'current' })
+  } catch (error) {
+    if (!(error instanceof AppwriteException && error.code === 401)) {
+      throw error
+    }
+  }
+  clearSessionSecret()
+})
