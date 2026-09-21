@@ -13,7 +13,7 @@ export function Header() {
       {viewer ? (
         <span>{viewer.account?.firstName}</span>
       ) : (
-        <a href="/sign-in">Sign in</a>
+        <Link to="/sign-in">Sign in</Link>
       )}
     </header>
   )

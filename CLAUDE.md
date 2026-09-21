@@ -22,8 +22,10 @@ Some of them are wrong or unsafe on purpose. Before implementing any of them, te
 ## Code style
 
 - Match the starter: no semicolons, single quotes, `#/` alias, TypeScript strict.
-- One component per file.
+- One screen = one file (`<Name>Screen.tsx`). Sub-components stay in that file unless reused elsewhere.
 - Layout: `src/routes/` holds only route files (guards + composition). UI components and queries live in `src/features/<feature>/` (`auth`, `account`). Server-only code stays in `src/server/`.
+- Reusable UI used by more than one feature lives in `src/components/`.
+- Forms are uncontrolled: read values from `FormData` on submit. Inputs go through `Field`.
 - No single-letter names except `e` (event), `i` (index), `_`. Query results end in `Query`, mutations in `Mutation`.
 - Every mutation: submit disabled while pending, error shown to the user, state reset only on success.
 - Comments: default zero. One short WHY-line only when the reason is non-obvious (hidden invariant, library quirk). Never restate what the code does. No JSDoc, no multi-line comment blocks, no references to tasks or notes in source.
