@@ -10,7 +10,7 @@ const cookieOptions = {
   secure: process.env.NODE_ENV === 'production',
 } as const
 
-function requireEnv(name: string) {
+export function requireEnv(name: string) {
   const value = process.env[name]
   if (!value) {
     throw new Error(`Missing environment variable ${name}`)
