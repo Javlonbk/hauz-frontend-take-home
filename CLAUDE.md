@@ -22,7 +22,8 @@ Some of them are wrong or unsafe on purpose. Before implementing any of them, te
 ## Code style
 
 - Match the starter: no semicolons, single quotes, `#/` alias, TypeScript strict.
-- One component per file. A route file is a thin composition; forms and pieces live next to it.
+- One component per file.
+- Layout: `src/routes/` holds only route files (guards + composition). UI components and queries live in `src/features/<feature>/` (`auth`, `account`). Server-only code stays in `src/server/`.
 - No single-letter names except `e` (event), `i` (index), `_`. Query results end in `Query`, mutations in `Mutation`.
 - Every mutation: submit disabled while pending, error shown to the user, state reset only on success.
 - Comments: default zero. One short WHY-line only when the reason is non-obvious (hidden invariant, library quirk). Never restate what the code does. No JSDoc, no multi-line comment blocks, no references to tasks or notes in source.

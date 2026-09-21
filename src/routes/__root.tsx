@@ -1,9 +1,13 @@
 import type { QueryClient } from '@tanstack/react-query'
 import {
   HeadContent,
+  Outlet,
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
+
+import { Header } from '#/features/auth/Header'
+import { viewerQueryOptions } from '#/features/auth/viewer'
 
 import appCss from '../styles.css?url'
 
@@ -20,7 +24,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
     links: [{ rel: 'stylesheet', href: appCss }],
   }),
+  beforeLoad: async ({ context }) => ({
+    viewer: await context.queryClient.ensureQueryData(viewerQueryOptions()),
+  }),
   shellComponent: RootDocument,
+  component: RootComponent,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -30,10 +38,18 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {/* The site header belongs here. See TASK.md. */}
         {children}
         <Scripts />
       </body>
     </html>
+  )
+}
+
+function RootComponent() {
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
   )
 }
