@@ -2,20 +2,16 @@ import { createServerFn } from '@tanstack/react-start'
 import { Account, AppwriteException, ExecutionMethod, ID } from 'node-appwrite'
 import { z } from 'zod'
 
+import type { Viewer } from '#/types'
+
 import {
   adminClient,
   clearSessionSecret,
   readSessionSecret,
   sessionClient,
   writeSessionSecret,
-} from '#/server/appwrite'
-import {
-  PersonalAccountError,
-  callPersonalAccount,
-  type PersonalAccount,
-} from '#/server/personal-account'
-
-export type Viewer = { account: PersonalAccount | null } | null
+} from './appwrite'
+import { PersonalAccountError, callPersonalAccount } from './personal-account'
 
 async function loadAccount(secret: string) {
   try {

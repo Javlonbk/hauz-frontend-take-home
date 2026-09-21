@@ -1,19 +1,8 @@
 import { ExecutionMethod, Functions } from 'node-appwrite'
 
-import { requireEnv, sessionClient } from '#/server/appwrite'
+import type { PersonalAccount } from '#/types'
 
-export type PersonalRole = 'property_owner' | 'realtor'
-
-export interface PersonalAccount {
-  personalAccountId: string
-  firstName: string
-  lastName: string
-  role: PersonalRole
-  contactEmail: string | null
-  bio: string | null
-  createdAt: string
-  updatedAt: string
-}
+import { requireEnv, sessionClient } from './appwrite'
 
 export class PersonalAccountError extends Error {
   constructor(

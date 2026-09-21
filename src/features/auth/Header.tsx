@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 
-import { viewerQueryOptions } from '#/features/auth/viewer'
-import { logOut } from '#/server/auth'
+import { logOut } from '#/server'
+
+import { viewerQueryOptions } from './viewer'
 
 export function Header() {
   const viewerQuery = useSuspenseQuery(viewerQueryOptions())

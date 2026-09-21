@@ -2,9 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 
-import { Field } from '#/components/Field'
-import { viewerQueryOptions } from '#/features/auth/viewer'
-import { requestSignInCode, verifySignInCode } from '#/server/auth'
+import { Field } from '#/components'
+import { requestSignInCode, verifySignInCode } from '#/server'
+
+import { viewerQueryOptions } from './viewer'
 
 export function SignInScreen({ redirectTo }: { redirectTo: string }) {
   const [userId, setUserId] = useState<string | null>(null)

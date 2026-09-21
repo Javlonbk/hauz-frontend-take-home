@@ -36,6 +36,14 @@ export function readSessionSecret() {
   return getCookie(SESSION_COOKIE) ?? null
 }
 
+export function requireSessionSecret() {
+  const secret = readSessionSecret()
+  if (!secret) {
+    throw new Error('Not signed in.')
+  }
+  return secret
+}
+
 export function writeSessionSecret(secret: string, expiresAt: string) {
   setCookie(SESSION_COOKIE, secret, {
     ...cookieOptions,

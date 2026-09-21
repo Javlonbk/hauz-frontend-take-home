@@ -1,14 +1,16 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { z } from 'zod'
 
-import { SignInScreen } from '#/features/auth/SignInScreen'
-import { safeRedirect } from '#/features/auth/redirect'
+import { SignInScreen, safeRedirect } from '#/features/auth'
 
 export const Route = createFileRoute('/sign-in')({
   validateSearch: z.object({ redirect: z.string().optional() }),
   beforeLoad: ({ context, search }) => {
-    if (context.viewer) {
+    if (context.viewer?.account) {
       throw redirect({ href: safeRedirect(search.redirect) })
+    }
+    if (context.viewer) {
+      throw redirect({ to: '/onboarding', search: { redirect: search.redirect } })
     }
   },
   component: SignInPage,

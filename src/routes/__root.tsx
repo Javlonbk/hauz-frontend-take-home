@@ -6,8 +6,7 @@ import {
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 
-import { Header } from '#/features/auth/Header'
-import { viewerQueryOptions } from '#/features/auth/viewer'
+import { Header, viewerQueryOptions } from '#/features/auth'
 
 import appCss from '../styles.css?url'
 
