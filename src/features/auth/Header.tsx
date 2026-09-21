@@ -28,8 +28,8 @@ function LogOutButton() {
   const logOutMutation = useMutation({
     mutationFn: () => logOut(),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: viewerQueryOptions().queryKey })
       await navigate({ to: '/' })
+      queryClient.setQueryData(viewerQueryOptions().queryKey, null)
     },
   })
 

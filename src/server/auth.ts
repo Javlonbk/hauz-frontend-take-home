@@ -76,6 +76,7 @@ export const logOut = createServerFn({ method: 'POST' }).handler(async () => {
     return
   }
 
+  clearSessionSecret()
   try {
     await new Account(sessionClient(secret)).deleteSession({ sessionId: 'current' })
   } catch (error) {
@@ -83,5 +84,4 @@ export const logOut = createServerFn({ method: 'POST' }).handler(async () => {
       throw error
     }
   }
-  clearSessionSecret()
 })
